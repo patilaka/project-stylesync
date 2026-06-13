@@ -632,7 +632,35 @@
   }
   @media (max-width: 600px) {
     .nav-links { display: none; }
-    .nav-mobile-btn { display: block; }
+    .nav-links { display: none; }
+.nav-links.mobile-open {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  position: fixed;
+  top: 70px; left: 0; right: 0;
+  background: rgba(255,248,240,0.98);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 5% 24px;
+  box-shadow: var(--shadow-md);
+  z-index: 99;
+  gap: 0;
+}
+.nav-links.mobile-open li,
+.nav-links.mobile-open a {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1rem;
+  color: var(--plum);
+  border-bottom: 1px solid var(--border);
+}
+.nav-links.mobile-open .nav-cta {
+  margin-top: 16px;
+  text-align: center;
+  border-bottom: none;
+}
+.nav-mobile-btn { display: block; }
     .section { padding: 60px 5%; }
     .how-steps { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
@@ -663,7 +691,7 @@
     <li><a href="stylesync-quiz.html">AI Stylist</a></li>
     <a href="stylesync-booking.html" class="nav-cta">Book Now</a>
   </ul>
-  <button class="nav-mobile-btn" onclick="alert('Mobile menu — coming soon!')">☰</button>
+  <button class="nav-mobile-btn" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open');this.textContent=this.textContent==='☰'?'✕':'☰'">☰</button>
 </nav>
 
 <!-- ── HERO ── -->
@@ -927,8 +955,8 @@
     <h2 class="section-title">Your Perfect Salon is<br/>One Click Away</h2>
     <p>Join 15,000+ Chennai women who trust StyleSync for every occasion — big or small.</p>
     <div class="cta-btns">
-      <button class="cta-primary" onclick="alert('Booking page — coming soon!')">Book Your Appointment</button>
-      <button class="cta-secondary" onclick="alert('Salon listing — coming soon!')">Browse All Salons</button>
+      <a href="stylesync-booking.html" class="cta-primary">Book your Appointment</a>
+      <button class="cta-secondary" onclick="alert('Salon listing — coming soon! or google map guide you')">Browse All Salons</button>
     </div>
   </div>
 </section>
@@ -997,7 +1025,7 @@ const salons = [
 function renderSalons(data) {
   const grid = document.getElementById('salonsGrid');
   grid.innerHTML = data.map(s => `
-    <div class="salon-card" onclick="alert('Opening ${s.name} — Salon Detail page coming soon!')">
+    <div class="salon-card" onclick="window.location.href='stylesync-detail.html'">
       <div class="salon-card-img">
         <img class="salon-card-img-inner" src="${s.img}" alt="${s.name}" loading="lazy" onerror="this.style.background='linear-gradient(135deg,#E8C4A8,#6B2E61)';this.style.opacity='0.5'"/>
         <div class="salon-tag">${s.tag}</div>
