@@ -39,7 +39,7 @@ img{display:block;max-width:100%}
 .nav-links a:hover{color:var(--plum)}
 .nav-cta{background:var(--plum);color:var(--white);padding:9px 20px;border-radius:99px;font-size:0.85rem;font-weight:500;transition:background 0.2s}
 .nav-cta:hover{background:var(--plum-lt)}
-.nav-mobile-btn{display:none;background:none;border:none;font-size:1.5rem;color:var(pink);cursor:pointer;padding:4px}
+.nav-mobile-btn{display:none;background:none;border:none;font-size:1.5rem;color:var(--plum);cursor:pointer;padding:4px}
 
 /* GALLERY */
 .gallery{margin-top:66px;display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:280px 280px;gap:6px;height:560px;overflow:hidden}
@@ -923,13 +923,17 @@ const ALL_TIMES = ['10:00','10:30','11:00','11:30','12:00','12:30','2:00','2:30'
 const UNAVAIL = ['11:00','12:30','3:30','5:30'];
 
 function renderTimeSlots() {
-  ['timeSlots','bcTimes'].forEach(id => {
+  const configs = [
+    { id: 'timeSlots', cls: 'time-slot', naClass: 'unavail' },
+    { id: 'bcTimes',   cls: 'bc-time',   naClass: 'na' }
+  ];
+  configs.forEach(({ id, cls, naClass }) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.innerHTML = ALL_TIMES.map(t => {
       const na = UNAVAIL.includes(t);
       const active = selectedTime === t;
-      return `<div class="time-slot ${na ? 'unavail' : ''} ${active && !na ? 'active' : ''}" 
+      return `<div class="${cls} ${na ? naClass : ''} ${active && !na ? 'active' : ''}" 
         onclick="${na ? '' : `setTime('${t}')`}">${t}</div>`;
     }).join('');
   });
@@ -985,6 +989,7 @@ renderServices();
 renderDates('availDates');
 renderDates('bcDates');
 renderTimeSlots();
+updateBookingCard();
 </script>
 </body>
 </html>
